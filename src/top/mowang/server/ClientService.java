@@ -10,6 +10,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Properties;
 
 /**
@@ -25,6 +27,11 @@ public class ClientService {
     private User user = new User();
     private Socket socket;
 
+    /**
+     * 从Properties配置文件里读取服务端地址并返回建立的连接
+     * @return Socket
+     * @throws Exception
+     */
     public Socket initSocket() throws Exception{
         //从Properties配置文件里读取服务端地址并建立连接
         Properties properties = new Properties();
@@ -33,6 +40,27 @@ public class ClientService {
         String port = (String) properties.get("port");
         System.out.println("服务器地址:"+serverIP+":"+port);
         return new Socket(InetAddress.getByName(serverIP), Integer.parseInt(port));
+    }
+
+    /**
+     * 获取在线用户列表
+     * @param userName 用户名
+     */
+    public void getOnlineUserList(String userName){
+        Message actionMessage = new Message();
+        actionMessage.setMessageType(MessageType.MESSAGE_GET_ONLINE_LIST);
+        actionMessage.setSender(userName);
+        actionMessage.setReceiver("服务器");
+        actionMessage.setSendTime(new SimpleDateFormat("yyyy-MM-dd HH-mm-ss").format(new Date()));
+        ClientConnectServerThread clientConnectServerThread = ManageClientThread.getClientConnectServerThread(userName);
+        socket = clientConnectServerThread.getSocket();
+        try {
+            //向服务端发送请求用户列表
+            ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+            outputStream.writeObject(actionMessage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -68,6 +96,7 @@ public class ClientService {
                 ManageClientThread.addClientConnectServerThread(userName,ccst);
                 isLoginOk = true;
             }else {
+                System.out.println(message);
                 if (socket != null) {
                     socket.close();
                 }
@@ -117,5 +146,20 @@ public class ClientService {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public void logout(String userName) {
+        //给服务器发送user对象
+        try {
+            Socket socket = ManageClientThread.getClientConnectServerThread(userName).getSocket();
+            ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+            //发送退出系统的消息
+            Message actionMessage = new Message();
+            actionMessage.setMessageType(MessageType.MESSAGE_CLIENT_EXIT);
+            oos.writeObject(actionMessage);
+            oos.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

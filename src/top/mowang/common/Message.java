@@ -85,4 +85,9 @@ public class Message implements Serializable {
         this.sendTime = sendTime;
         this.messageType = messageType;
     }
+
+    @Override
+    public String toString() {
+        return "收到一个消息，发送者:"+sender+"，发送时间："+sendTime+"，内容："+content;
+    }
 }
