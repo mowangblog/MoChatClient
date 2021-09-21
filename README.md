@@ -1,8 +1,6 @@
 # MoChatClient
  Multi user instant messaging system client
 
-<iframe src="https://ghbtns.com/github-btn.html?user=mowangblog&type=follow&count=true&size=large" frameborder="0" scrolling="0" width="230" height="30" title="GitHub"></iframe>
-
 ## 项目概述
 
 不使用任何框架的Java多用户即时通讯系统，可以学习到面向对象，集合，多线程，IO流，网络编程等多种知识，页面由于没有学Java-Gui就简化了，整体通讯框架已经搭好，界面的意义不大，以后有兴趣可能会做一个界面。
