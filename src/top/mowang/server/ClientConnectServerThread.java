@@ -56,6 +56,14 @@ public class ClientConnectServerThread extends Thread {
                 } else if (MessageType.MESSAGE_FILE_MES.equals(message.getMessageType())) {
                     //收到文件
                    saveFile(message);
+                }else if (MessageType.MESSAGE_FILE_OFFLINE_MES.equals(message.getMessageType())) {
+                    //收到离线文件
+                    System.out.println("=======离线文件======");
+                    saveFile(message);
+                } else if (MessageType.MESSAGE_OFFLINE_MES.equals(message.getMessageType())) {
+                    //收到离线消息
+                    System.out.println("=======离线消息======");
+                    System.out.println("收到一个离线消息，" + message);
                 } else if (MessageType.MESSAGE_COMMON_SERVER_MES.equals(message.getMessageType())) {
                     System.out.println("收到一个系统消息，" + message);
                 }

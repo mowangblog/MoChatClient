@@ -69,6 +69,16 @@ public interface MessageType {
     String MESSAGE_FILE_MES = "8";
 
     /**
+     * 发送离线文件
+     */
+    String MESSAGE_FILE_OFFLINE_MES = "9";
+
+    /**
+     * 发送离线消息
+     */
+    String MESSAGE_OFFLINE_MES = "10";
+
+    /**
      * 客户端请求退出
      */
     String MESSAGE_CLIENT_EXIT = "40";
