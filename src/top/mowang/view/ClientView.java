@@ -4,10 +4,7 @@ import org.junit.Test;
 import top.mowang.common.Message;
 import top.mowang.common.MessageType;
 import top.mowang.common.User;
-import top.mowang.server.ClientConnectServerThread;
-import top.mowang.server.ClientService;
-import top.mowang.server.ManageClientThread;
-import top.mowang.server.MessageService;
+import top.mowang.server.*;
 import top.mowang.utils.Utility;
 
 import java.io.IOException;
@@ -114,7 +111,7 @@ public class ClientView {
                     break;
                 case "2":
                     System.out.println("私发消息");
-                    System.out.println("请输入你想要私聊的用户(在线):");
+                    System.out.println("请输入你想要私聊的用户:");
                     String receiver = Utility.readString(20);
                     System.out.println("请输入你要说的内容:");
                     String content = Utility.readString(100);
@@ -123,9 +120,19 @@ public class ClientView {
                     break;
                 case "3":
                     System.out.println("群发消息");
+                    System.out.println("请输入你要给大家说的内容:");
+                    String message = Utility.readString(100);
+                    messageService.sendPublicMessage(userName,message);
+                    System.out.println(userName+"给所有人发送消息:"+message);
                     break;
                 case "4":
                     System.out.println("发送文件");
+                    System.out.println("请输入你要发送文件的路径:");
+                    String path = Utility.readString(100);
+                    System.out.println("请输入你想要发送文件的用户:");
+                    String user = Utility.readString(20);
+                    //指定路径，接收者，发送者
+                    FileServer.sendFileUser(path,user,userName);
                     break;
                 case "9":
                     loop = false;

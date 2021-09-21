@@ -1,5 +1,7 @@
 package top.mowang.utils;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 /**
@@ -173,5 +175,13 @@ public class Utility {
         }
 
         return line;
+    }
+
+    /**
+     * 获取当前时间
+     * @return date
+     */
+    public static String getTime(){
+        return new SimpleDateFormat("yyyy-MM-dd HH-mm-ss").format(new Date());
     }
 }

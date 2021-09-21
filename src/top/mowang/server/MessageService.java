@@ -2,6 +2,7 @@ package top.mowang.server;
 
 import top.mowang.common.Message;
 import top.mowang.common.MessageType;
+import top.mowang.utils.Utility;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -15,6 +16,7 @@ import java.util.Date;
  * @author : Xuan Li
  * @date : 2021-09-21 02:16
  **/
+@SuppressWarnings("all")
 public class MessageService {
     /**
      * 私发消息
@@ -25,10 +27,30 @@ public class MessageService {
         message.setSender(sender);
         message.setReceiver(receiver);
         message.setContent(content);
-        message.setSendTime(new SimpleDateFormat("yyyy-MM-dd HH-mm-ss").format(new Date()));
+        message.setSendTime(Utility.getTime());
         try {
             ObjectOutputStream outputStream = new ObjectOutputStream(
                     ManageClientThread.getClientConnectServerThread(sender).getSocket().getOutputStream());
+            outputStream.writeObject(message);
+            outputStream.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 群发消息
+     */
+    public void sendPublicMessage(String userName, String content) {
+        Message message = new Message();
+        message.setMessageType(MessageType.MESSAGE_COMMON_PUBLIC_MES);
+        message.setSender(userName);
+        message.setReceiver("所有人");
+        message.setContent(content);
+        message.setSendTime(Utility.getTime());
+        try {
+            ObjectOutputStream outputStream = new ObjectOutputStream(
+                    ManageClientThread.getClientConnectServerThread(userName).getSocket().getOutputStream());
             outputStream.writeObject(message);
             outputStream.flush();
         } catch (IOException e) {

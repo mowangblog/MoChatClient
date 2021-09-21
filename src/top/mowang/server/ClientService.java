@@ -3,6 +3,7 @@ package top.mowang.server;
 import top.mowang.common.MessageType;
 import top.mowang.common.User;
 import top.mowang.common.Message;
+import top.mowang.utils.Utility;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -51,7 +52,7 @@ public class ClientService {
         actionMessage.setMessageType(MessageType.MESSAGE_GET_ONLINE_LIST);
         actionMessage.setSender(userName);
         actionMessage.setReceiver("服务器");
-        actionMessage.setSendTime(new SimpleDateFormat("yyyy-MM-dd HH-mm-ss").format(new Date()));
+        actionMessage.setSendTime(Utility.getTime());
         ClientConnectServerThread clientConnectServerThread = ManageClientThread.getClientConnectServerThread(userName);
         socket = clientConnectServerThread.getSocket();
         try {

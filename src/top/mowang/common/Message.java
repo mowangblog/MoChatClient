@@ -35,6 +35,19 @@ public class Message implements Serializable {
      */
     private String messageType;
 
+    /**
+     * 文件字节数组
+     */
+    private byte[] bytes;
+
+    public byte[] getBytes() {
+        return bytes;
+    }
+
+    public void setBytes(byte[] bytes) {
+        this.bytes = bytes;
+    }
+
     public String getSender() {
         return sender;
     }
@@ -88,6 +101,6 @@ public class Message implements Serializable {
 
     @Override
     public String toString() {
-        return "收到一个消息，发送者:"+sender+"，发送时间："+sendTime+"，内容："+content;
+        return "发送者:"+sender+"，发送时间："+sendTime+"，内容："+content;
     }
 }

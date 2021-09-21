@@ -54,6 +54,21 @@ public interface MessageType {
     String MESSAGE_RET_ONLINE_LIST = "5";
 
     /**
+     * 群发消息
+     */
+    String MESSAGE_COMMON_PUBLIC_MES = "6";
+
+    /**
+     * 系统消息
+     */
+    String MESSAGE_COMMON_SERVER_MES = "7";
+
+    /**
+     * 发送文件
+     */
+    String MESSAGE_FILE_MES = "8";
+
+    /**
      * 客户端请求退出
      */
     String MESSAGE_CLIENT_EXIT = "40";
